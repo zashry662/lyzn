@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>lyzn.eg | Clothing that fits you</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--ink:#f5f1ff;--mute:#b9b3cc;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.15);
+--g1:#000;--g2:#0a0614;--g3:#000;--g4:#12060f;
+--tg:linear-gradient(90deg,#ff7eb3,#ffc15e,#a58bff,#5ee7df,#ff7eb3);
+--ag:linear-gradient(90deg,#ff6b9d,#ffb347,#8be9a8,#6ec1ff,#ff6b9d);--onag:#0b0612;--solid:#f5f1ff;--onsolid:#0b0612;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:70px;scroll-behavior:smooth;background:#000}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:400 16px/1.65 Manrope,system-ui,sans-serif;min-height:100vh}
+.bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(125deg,var(--g1),var(--g2),var(--g3),var(--g4),var(--g1));background-size:400% 400%;animation:shift 22s ease-in-out infinite}
+.blob{position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);opacity:.3;pointer-events:none}
+.b1{width:46vw;height:46vw;left:-10vw;top:-8vw;background:#ff6b9d;animation:drift1 17s ease-in-out infinite alternate}
+.b2{width:40vw;height:40vw;right:-8vw;top:30vh;background:#6ec1ff;animation:drift2 21s ease-in-out infinite alternate}
+.b3{width:36vw;height:36vw;left:25vw;bottom:-14vw;background:#ffb347;animation:drift1 25s ease-in-out infinite alternate-reverse}
+@keyframes shift{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+@keyframes drift1{to{transform:translate(12vw,10vh) scale(1.2)}}
+@keyframes drift2{to{transform:translate(-14vw,-12vh) scale(.85)}}
+@keyframes flow{to{background-position:300% 0}}
+@keyframes bob{50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+h1,h2,h3,.logo{font-family:Syne,Manrope,sans-serif;margin:0;line-height:1.1}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:var(--card);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{font-size:26px;font-weight:800;letter-spacing:1px}
+nav{display:flex;gap:26px;font-weight:500}nav a:hover{opacity:.65}
+.cartbtn{background:var(--solid);color:var(--onsolid);border:0;border-radius:999px;padding:8px 18px;font-weight:600}
+.cartbtn b{background:var(--ag);background-size:300% 100%;animation:flow 6s linear infinite;color:var(--onag);border-radius:999px;padding:1px 9px;margin-left:8px}
+.hero{padding:90px 0 40px}
+.hero .wrap{text-align:center}.hero p{margin-left:auto;margin-right:auto}
+.hero h1{font-size:clamp(44px,8vw,92px);font-weight:800;letter-spacing:-1.5px;background:var(--tg);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 9s linear infinite,rise .9s both}
+.hero p{color:var(--mute);max-width:46ch;font-size:18px;margin:20px 0 28px;animation:rise .9s .15s both}
+.hero .cta{animation:rise .9s .3s both}
+.btn{display:inline-block;background:var(--ag);background-size:300% 100%;animation:flow 6s linear infinite;color:var(--onag);border:0;border-radius:12px;padding:14px 30px;font-weight:700}
+.btn.ghost{background:transparent;animation:none;border:2px solid var(--ink);color:var(--ink);margin-left:10px}
+section{padding:46px 0}
+h2{font-size:clamp(30px,5vw,44px);font-weight:800;margin-bottom:8px}
+.sub{color:var(--mute);margin:0 0 24px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.chip{background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:7px 20px;font-weight:500;backdrop-filter:blur(8px)}
+.chip[aria-pressed="true"]{background:var(--solid);color:var(--onsolid);border-color:var(--solid)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s}
+.card:hover{transform:translateY(-6px)}
+.pic{aspect-ratio:1/1;display:grid;place-items:center;background-size:250% 250%;animation:shift 12s ease-in-out infinite}
+.pic svg{width:56%;fill:rgba(255,255,255,.92);filter:drop-shadow(0 10px 14px rgba(0,0,0,.25))}
+.info{padding:16px;display:flex;flex-direction:column;gap:9px;flex:1}
+.info h3{font-size:19px;font-weight:700}
+.price{font-weight:700}
+.sizes{display:flex;gap:6px}
+.sz{min-width:38px;height:34px;border:1.5px solid var(--line);background:transparent;border-radius:9px;font-size:13px;font-weight:600}
+.sz[aria-pressed="true"]{background:var(--solid);color:var(--onsolid);border-color:var(--solid)}
+.add{margin-top:auto;background:var(--solid);color:var(--onsolid);border:0;border-radius:11px;padding:11px;font-weight:600}
+.add:hover{background:var(--ag);background-size:300% 100%;animation:flow 4s linear infinite;color:var(--onag)}
+.about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.about p{color:var(--mute);margin:0 0 14px;font-size:18px}
+.facts{display:grid;gap:12px}
+.facts div{background:var(--card);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:16px;padding:16px 20px;color:var(--mute)}
+.facts b{display:block;font-family:Syne,sans-serif;font-size:18px;color:var(--ink)}
+footer{border-top:1px solid var(--line);padding:30px 0;background:var(--card);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+footer a{margin-left:18px;font-weight:500}footer a:hover{opacity:.65}
+#drawer{position:fixed;inset:0 0 0 auto;width:min(410px,100%);background:var(--g1);color:var(--ink);border-left:1px solid var(--line);z-index:40;transform:translateX(102%);transition:transform .28s;display:flex;flex-direction:column;padding:20px;padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+#drawer.open{transform:none}
+#veil{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:30;display:none}
+#veil.open{display:block}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.x{background:none;border:0;font-size:28px;line-height:1}
+#items{flex:1;overflow:auto}
+.row{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-weight:600}
+.row small{color:var(--mute);display:block;font-weight:400}
+.qty button{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--line);background:transparent}
+.empty{color:var(--mute);text-align:center;margin-top:40px}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:19px;margin:14px 0}
+.buy{width:100%;text-align:center}
+@media (max-width:760px){nav{display:none}.about .wrap{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<header><div class="wrap">
+  <a href="#top" class="logo" data-brand>lyzn.eg</a>
+  <nav><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+  <button class="cartbtn" id="openCart" aria-label="Open cart">Cart<b id="count">0</b></button>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+  <div>
+    <h1 id="heroTitle"></h1>
+    <p id="heroText"></p>
+    <div class="cta"><a class="btn" href="#shop">Shop now</a><a class="btn ghost" href="#about">Our story</a></div>
+  </div>
+</div></div>
+
+<section id="shop"><div class="wrap">
+  <h2>The collection</h2>
+  <p class="sub">Pick a size, add to cart, and send your order on WhatsApp.</p>
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="about" class="about"><div class="wrap">
+  <div><h2>About the brand</h2><p id="aboutText"></p></div>
+  <div class="facts" id="facts"></div>
+</div></section>
+</main>
+
+<footer id="contact"><div class="wrap">
+  <div><span class="logo" data-brand></span> &copy; <span id="year"></span></div>
+  <div id="links"></div>
+</div></footer>
+
+<div id="veil"></div>
+<aside id="drawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="dh"><h2 style="font-size:26px">Your cart</h2><button class="x" id="closeCart" aria-label="Close cart">&times;</button></div>
+  <div id="items"></div>
+  <div class="total"><span>Total</span><span id="total">0</span></div>
+  <a class="btn buy" id="checkout" href="#" target="_blank" rel="noopener">Order on WhatsApp</a>
+</aside>
+
+<script>
+/* ============ EDIT HERE ONLY ============ */
+const CONFIG = {
+  brand: "lyzn.eg",
+  phone: "01080871601",
+  currency: "EGP",
+  whatsapp: "201080871601",            // international format, no + or leading zeros
+  instagram: "https://instagram.com/lyzn.eg",
+  facebook: "",                        // leave empty to hide
+  heroTitle: "Wear what feels like you",
+  heroText: "Everyday pieces in soft cotton, cut with care and made to last. Simple shapes, loud colors, no fuss.",
+  about: "We started with one idea: great clothes at a fair price, in fabric that survives the wash. Every piece is cut, checked and packed by hand before it ships.",
+  facts: [
+    ["100% cotton", "Soft, breathable, built to last"],
+    ["Nationwide shipping", "Delivered in 2 to 4 days"],
+    ["14-day exchange", "If the size isn't right, we swap it"]
+  ],
+  categories: ["All", "Tees", "Hoodies", "Pants"],
+  products: [
+    {name:"Essential Tee", cat:"Tees", price:350, color:"#ff6b9d", sizes:["S","M","L","XL"]},
+    {name:"Oversized Tee", cat:"Tees", price:420, color:"#6e8bff", sizes:["M","L","XL"]},
+    {name:"Classic Hoodie", cat:"Hoodies", price:750, color:"#8a5cf6", sizes:["S","M","L","XL"]},
+    {name:"Jogger Pants", cat:"Pants", price:550, color:"#12b0a0", sizes:["S","M","L","XL"]}
+  ]
+};
+/* ======================================== */
+
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString("en-US") + " " + CONFIG.currency;
+const shapes = {
+  "Tees":'<path d="M30 14 L44 10 Q50 20 56 10 L70 14 L92 30 L82 46 L72 40 L72 90 L28 90 L28 40 L18 46 L8 30 Z"/>',
+  "Hoodies":'<path d="M32 16 Q50 4 68 16 L92 32 L84 56 L72 50 L72 90 L28 90 L28 50 L16 56 L8 32 Z"/>',
+  "Pants":'<path d="M30 8 L70 8 L74 92 L56 92 L50 34 L44 92 L26 92 Z"/>'
+};
+let cart = [], filter = CONFIG.categories[0];
+const sel = {};
+
+document.title = CONFIG.brand + " | " + CONFIG.heroTitle;
+document.querySelectorAll("[data-brand]").forEach(e => e.textContent = CONFIG.brand);
+$("#heroTitle").textContent = CONFIG.heroTitle;
+$("#heroText").textContent = CONFIG.heroText;
+$("#aboutText").textContent = CONFIG.about;
+$("#year").textContent = new Date().getFullYear();
+$("#facts").innerHTML = CONFIG.facts.map(f => `<div><b>${f[0]}</b>${f[1]}</div>`).join("");
+$("#links").innerHTML = `<a href="https://wa.me/${CONFIG.whatsapp}" target="_blank" rel="noopener">WhatsApp: ${CONFIG.phone}</a><a href="${CONFIG.instagram}" target="_blank" rel="noopener">Instagram</a>` + (CONFIG.facebook ? `<a href="${CONFIG.facebook}" target="_blank" rel="noopener">Facebook</a>` : "");
+
+function renderFilters(){
+  $("#filters").innerHTML = CONFIG.categories.map(c => `<button class="chip" aria-pressed="${c===filter}" data-c="${c}">${c}</button>`).join("");
+  document.querySelectorAll(".chip").forEach(b => b.onclick = () => {filter = b.dataset.c; renderFilters(); renderGrid();});
+}
+function renderGrid(){
+  const list = CONFIG.products.map((p,i)=>({...p,i})).filter(p => filter===CONFIG.categories[0] || p.cat===filter);
+  $("#grid").innerHTML = list.map(p => {
+    if(!sel[p.i]) sel[p.i] = p.sizes[0];
+    return `<article class="card">
+      <div class="pic" style="background-image:linear-gradient(135deg,${p.color},#ffffff55 50%,${p.color}aa 75%,${p.color})"><svg viewBox="0 0 100 100" aria-hidden="true">${shapes[p.cat]||shapes["Tees"]}</svg></div>
+      <div class="info"><h3>${p.name}</h3><div class="price">${fmt(p.price)}</div>
+      <div class="sizes" role="group" aria-label="Size">${p.sizes.map(s=>`<button class="sz" aria-pressed="${sel[p.i]===s}" data-i="${p.i}" data-s="${s}">${s}</button>`).join("")}</div>
+      <button class="add" data-i="${p.i}">Add to cart</button></div></article>`;
+  }).join("");
+  document.querySelectorAll(".sz").forEach(b => b.onclick = () => {sel[b.dataset.i]=b.dataset.s; renderGrid();});
+  document.querySelectorAll(".add").forEach(b => b.onclick = () => add(+b.dataset.i));
+}
+function add(i){
+  const size = sel[i], f = cart.find(x => x.i===i && x.size===size);
+  f ? f.q++ : cart.push({i,size,q:1});
+  renderCart(); openCart();
+}
+function renderCart(){
+  $("#count").textContent = cart.reduce((a,x)=>a+x.q,0);
+  const tot = cart.reduce((a,x)=>a+x.q*CONFIG.products[x.i].price,0);
+  $("#total").textContent = fmt(tot);
+  $("#items").innerHTML = cart.length ? cart.map((x,k)=>{
+    const p = CONFIG.products[x.i];
+    return `<div class="row"><div>${p.name}<small>Size ${x.size} &middot; ${fmt(p.price)}</small></div>
+      <div class="qty"><button data-k="${k}" data-d="-1" aria-label="Decrease">&minus;</button> ${x.q} <button data-k="${k}" data-d="1" aria-label="Increase">+</button></div></div>`;
+  }).join("") : '<p class="empty">Your cart is empty. Add a piece you like.</p>';
+  document.querySelectorAll(".qty button").forEach(b => b.onclick = () => {
+    const x = cart[b.dataset.k]; x.q += +b.dataset.d;
+    if(x.q<1) cart.splice(b.dataset.k,1);
+    renderCart();
+  });
+  const msg = "New order from " + CONFIG.brand + ":\n" + cart.map(x=>`- ${CONFIG.products[x.i].name} (${x.size}) x ${x.q}`).join("\n") + "\nTotal: " + tot + " " + CONFIG.currency;
+  $("#checkout").href = cart.length ? `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}` : "#";
+}
+function openCart(){$("#drawer").classList.add("open");$("#veil").classList.add("open");$("#drawer").setAttribute("aria-hidden","false")}
+function closeCart(){$("#drawer").classList.remove("open");$("#veil").classList.remove("open");$("#drawer").setAttribute("aria-hidden","true")}
+$("#openCart").onclick = openCart; $("#closeCart").onclick = closeCart; $("#veil").onclick = closeCart;
+document.addEventListener("keydown", e => e.key==="Escape" && closeCart());
+renderFilters(); renderGrid(); renderCart();
+</script>
+</body>
+</html>
