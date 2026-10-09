@@ -56,9 +56,26 @@ h2{font-size:clamp(30px,5vw,44px);font-weight:800;margin-bottom:8px}
 .card:hover{transform:translateY(-6px)}
 .pic{aspect-ratio:1/1;display:grid;place-items:center;background-size:250% 250%;animation:shift 12s ease-in-out infinite}
 .pic svg{width:56%;fill:rgba(255,255,255,.92);filter:drop-shadow(0 10px 14px rgba(0,0,0,.25))}
+
+/* ===== Image slider (product photos) ===== */
+.pic.slider{display:block;position:relative;overflow:hidden;aspect-ratio:3/4;background:#0d0d12;animation:none;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.slider .track{display:flex;height:100%;transition:transform .7s cubic-bezier(.65,0,.25,1);will-change:transform}
+.slider img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;-webkit-user-drag:none;transition:transform 1.2s ease}
+.slider:hover img{transform:scale(1.05)}
+.slider .nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;font-size:22px;line-height:1;display:grid;place-items:center;padding:0 0 3px;opacity:0;transition:opacity .25s,background .2s}
+.slider .nav:hover{background:rgba(0,0,0,.7)}
+.slider:hover .nav,.slider .nav:focus-visible{opacity:1}
+@media (hover:none){.slider .nav{opacity:.85}}
+.slider .prev{left:10px}.slider .next{right:10px}
+.slider .dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px;pointer-events:none}
+.slider .dots i{width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.5);transition:width .3s,background .3s}
+.slider .dots i.on{width:20px;background:#fff}
+.slider .badge{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:600;pointer-events:none}
+
 .info{padding:16px;display:flex;flex-direction:column;gap:9px;flex:1}
 .info h3{font-size:19px;font-weight:700}
 .price{font-weight:700}
+.det{display:flex;flex-wrap:wrap;gap:6px}.det span{font-size:12px;line-height:1.4;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:2px 10px;color:var(--mute)}.det span:first-child{color:var(--ink);font-weight:600}
 .sizes{display:flex;gap:6px}
 .sz{min-width:38px;height:34px;border:1.5px solid var(--line);background:transparent;border-radius:9px;font-size:13px;font-weight:600}
 .sz[aria-pressed="true"]{background:var(--solid);color:var(--onsolid);border-color:var(--solid)}
@@ -134,6 +151,67 @@ footer a{margin-left:18px;font-weight:500}footer a:hover{opacity:.65}
 </aside>
 
 <script>
+/* Product photos (files inside the images/ folder) */
+const SET_GREY_IMAGES = [
+  "images/set-grey-1.jpg",
+  "images/set-grey-2.jpg",
+  "images/set-grey-3.jpg",
+  "images/set-grey-4.jpg",
+  "images/set-grey-5.jpg",
+  "images/set-grey-6.jpg",
+  "images/set-grey-7.jpg",
+  "images/set-grey-8.jpg"
+];
+const SET_BLACK_IMAGES = [
+  "images/set-black-1.jpg",
+  "images/set-black-2.jpg",
+  "images/set-black-3.jpg",
+  "images/set-black-4.jpg",
+  "images/set-black-5.jpg",
+  "images/set-black-6.jpg",
+  "images/set-black-7.jpg"
+];
+const PANTS_BLACK_IMAGES = [
+  "images/black-pants-1.jpg",
+  "images/black-pants-2.jpg",
+  "images/black-pants-3.jpg",
+  "images/black-pants-4.jpg",
+  "images/black-pants-5.jpg",
+  "images/black-pants-6.jpg",
+  "images/black-pants-7.jpg"
+];
+const PANTS_GREY_IMAGES = [
+  "images/grey-pants-1.jpg",
+  "images/grey-pants-2.jpg",
+  "images/grey-pants-3.jpg",
+  "images/grey-pants-4.jpg",
+  "images/grey-pants-5.jpg",
+  "images/grey-pants-6.jpg",
+  "images/grey-pants-7.jpg",
+  "images/grey-pants-8.jpg"
+];
+const HOODIE_BLACK_IMAGES = [
+  "images/black-hoodie-1.jpg",
+  "images/black-hoodie-2.jpg",
+  "images/black-hoodie-3.jpg",
+  "images/black-hoodie-4.jpg",
+  "images/black-hoodie-5.jpg",
+  "images/black-hoodie-6.jpg",
+  "images/black-hoodie-7.jpg"
+];
+const HOODIE_GREY_IMAGES = [
+  "images/grey-hoodie-1.jpg",
+  "images/grey-hoodie-2.jpg",
+  "images/grey-hoodie-3.jpg",
+  "images/grey-hoodie-4.jpg",
+  "images/grey-hoodie-5.jpg",
+  "images/grey-hoodie-6.jpg",
+  "images/grey-hoodie-7.jpg",
+  "images/grey-hoodie-8.jpg"
+];
+</script>
+
+<script>
 /* ============ EDIT HERE ONLY ============ */
 const CONFIG = {
   brand: "lyzn.eg",
@@ -152,10 +230,13 @@ const CONFIG = {
   ],
   categories: ["All", "Tees", "Hoodies", "Pants"],
   products: [
-    {name:"Essential Tee", cat:"Tees", price:350, color:"#ff6b9d", sizes:["S","M","L","XL"]},
-    {name:" All set ", cat:"Tees", price:1200, color:"#6e8bff", sizes:["M","L","XL"]},
-    {name:" Hoodie", cat:"Hoodies", price:700, color:"#8a5cf6", sizes:["S","M","L","XL"]},
-    {name:"Jogger Pants", cat:"Pants", price:650, color:"#12b0a0", sizes:["S","M","L","XL"]}
+    // "Sets" is not a filter chip, so this item shows only under "All"
+    {name:"Set Grey", cat:"Sets", price:1200, color:"#9a9aa6", sizes:["S","M","L","XL"], images:SET_GREY_IMAGES, details:["100% Cotton","Hoodie + Pants","Oversized fit","Embroidered YZ logo"]},
+    {name:"Set Black", cat:"Sets", price:1200, color:"#15151a", sizes:["S","M","L","XL"], images:SET_BLACK_IMAGES, details:["100% Cotton","Hoodie + Pants","Oversized fit","Embroidered YZ logo"]},
+    {name:"Black Pants", cat:"Pants", price:600, color:"#15151a", sizes:["S","M","L","XL"], images:PANTS_BLACK_IMAGES, details:["100% Cotton","Wide-leg fit","Drawstring waist","Embroidered YZ logo"]},
+    {name:"Black Hoodie", cat:"Hoodies", price:650, color:"#15151a", sizes:["S","M","L","XL"], images:HOODIE_BLACK_IMAGES, details:["100% Cotton","Oversized fit","Kangaroo pocket","Embroidered YZ logo"]},
+    {name:"Grey Hoodie", cat:"Hoodies", price:650, color:"#9a9aa6", sizes:["S","M","L","XL"], images:HOODIE_GREY_IMAGES, details:["100% Cotton","Oversized fit","Kangaroo pocket","Embroidered YZ logo"]},
+    {name:"Grey Pants", cat:"Pants", price:600, color:"#9a9aa6", sizes:["S","M","L","XL"], images:PANTS_GREY_IMAGES, details:["100% Cotton","Wide-leg fit","Drawstring waist","Embroidered YZ logo"]}
   ]
 };
 /* ======================================== */
@@ -169,6 +250,9 @@ const shapes = {
 };
 let cart = [], filter = CONFIG.categories[0];
 const sel = {};
+const slideIdx = {};          // current slide per product
+const AUTOPLAY_MS = 3500;
+const reduceMotion = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
 document.title = CONFIG.brand + " | " + CONFIG.heroTitle;
 document.querySelectorAll("[data-brand]").forEach(e => e.textContent = CONFIG.brand);
@@ -183,19 +267,71 @@ function renderFilters(){
   $("#filters").innerHTML = CONFIG.categories.map(c => `<button class="chip" aria-pressed="${c===filter}" data-c="${c}">${c}</button>`).join("");
   document.querySelectorAll(".chip").forEach(b => b.onclick = () => {filter = b.dataset.c; renderFilters(); renderGrid();});
 }
+
+function picHTML(p){
+  if(p.images && p.images.length){
+    const n = p.images.length, cur = slideIdx[p.i] || 0;
+    return `<div class="pic slider" data-i="${p.i}" data-n="${n}" role="group" aria-roledescription="carousel" aria-label="${p.name} photos">
+      <div class="track" style="transform:translateX(-${cur*100}%)">${p.images.map((s,k)=>`<img src="${s}" alt="${p.name} photo ${k+1}" draggable="false" decoding="async"${k>1?' loading="lazy"':''}>`).join("")}</div>
+      <button class="nav prev" aria-label="Previous photo">&#8249;</button><button class="nav next" aria-label="Next photo">&#8250;</button>
+      <div class="dots">${p.images.map((_,k)=>`<i class="${k===cur?'on':''}"></i>`).join("")}</div>
+    </div>`;
+  }
+  return `<div class="pic" style="background-image:linear-gradient(135deg,${p.color},#ffffff55 50%,${p.color}aa 75%,${p.color})"><svg viewBox="0 0 100 100" aria-hidden="true">${shapes[p.cat]||shapes["Tees"]}</svg></div>`;
+}
+
 function renderGrid(){
   const list = CONFIG.products.map((p,i)=>({...p,i})).filter(p => filter===CONFIG.categories[0] || p.cat===filter);
   $("#grid").innerHTML = list.map(p => {
     if(!sel[p.i]) sel[p.i] = p.sizes[0];
     return `<article class="card">
-      <div class="pic" style="background-image:linear-gradient(135deg,${p.color},#ffffff55 50%,${p.color}aa 75%,${p.color})"><svg viewBox="0 0 100 100" aria-hidden="true">${shapes[p.cat]||shapes["Tees"]}</svg></div>
-      <div class="info"><h3>${p.name}</h3><div class="price">${fmt(p.price)}</div>
+      ${picHTML(p)}
+      <div class="info"><h3>${p.name}</h3><div class="price">${fmt(p.price)}</div>${p.details?`<div class="det">${p.details.map(d=>`<span>${d}</span>`).join("")}</div>`:""}
       <div class="sizes" role="group" aria-label="Size">${p.sizes.map(s=>`<button class="sz" aria-pressed="${sel[p.i]===s}" data-i="${p.i}" data-s="${s}">${s}</button>`).join("")}</div>
       <button class="add" data-i="${p.i}">Add to cart</button></div></article>`;
   }).join("");
   document.querySelectorAll(".sz").forEach(b => b.onclick = () => {sel[b.dataset.i]=b.dataset.s; renderGrid();});
   document.querySelectorAll(".add").forEach(b => b.onclick = () => add(+b.dataset.i));
+  initSliders();
 }
+
+/* ===== slider logic ===== */
+function goTo(el, idx){
+  const n = +el.dataset.n, i = el.dataset.i;
+  idx = (idx + n) % n;
+  slideIdx[i] = idx;
+  el.querySelector(".track").style.transform = `translateX(-${idx*100}%)`;
+  el.querySelectorAll(".dots i").forEach((d,k)=>d.classList.toggle("on",k===idx));
+}
+function initSliders(){
+  document.querySelectorAll(".slider").forEach(el => {
+    const i = el.dataset.i;
+    el.querySelector(".prev").onclick = () => goTo(el, (slideIdx[i]||0) - 1);
+    el.querySelector(".next").onclick = () => goTo(el, (slideIdx[i]||0) + 1);
+    el.onmouseenter = () => el.dataset.pause = "1";
+    el.onmouseleave = () => delete el.dataset.pause;
+    // swipe
+    let x0 = null;
+    el.addEventListener("touchstart", e => {x0 = e.touches[0].clientX; el.dataset.pause="1";}, {passive:true});
+    el.addEventListener("touchend", e => {
+      if(x0!==null){
+        const dx = e.changedTouches[0].clientX - x0;
+        if(Math.abs(dx) > 40) goTo(el, (slideIdx[i]||0) + (dx<0?1:-1));
+      }
+      x0 = null; setTimeout(()=>delete el.dataset.pause, 4000);
+    }, {passive:true});
+  });
+}
+if(!reduceMotion){
+  setInterval(() => {
+    if(document.hidden) return;
+    document.querySelectorAll(".slider").forEach(el => {
+      if(el.dataset.pause) return;
+      goTo(el, (slideIdx[el.dataset.i]||0) + 1);
+    });
+  }, AUTOPLAY_MS);
+}
+
 function add(i){
   const size = sel[i], f = cart.find(x => x.i===i && x.size===size);
   f ? f.q++ : cart.push({i,size,q:1});
